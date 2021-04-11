@@ -1,0 +1,65 @@
+---
+title: DATA 606 Data Project Proposal
+author: "Tage N Singh"
+---
+
+### Data Preparation
+
+```{r setup, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+# load data
+
+```
+
+
+### Research question 
+
+**You should phrase your research question in a way that matches up with the scope of inference your dataset allows for.**
+
+This project will examine the relationship between the confirmed COVID-19 cases and deaths for the United States between 01/22/2020 and 02/27/2021. The datasets provide county level data and popluations for each of the counties in the USA. 
+
+### Cases 
+
+**What are the cases, and how many are there?**
+
+The cases are provided in a time series format in csv format
+
+
+### Data collection 
+
+**Describe the method of data collection.**
+
+
+
+### Type of study 
+
+**What type of study is this (observational/experiment)?**
+
+This is an observational study.
+
+### Data Source 
+
+**If you collected the data, state self-collected. If not, provide a citation/link.**
+
+
+
+
+### Dependent Variable
+
+**What is the response variable? Is it quantitative or qualitative?**
+
+
+
+### Independent Variable
+
+**You should have two independent variables, one quantitative and one qualitative.**
+
+
+
+### Relevant summary statistics 
+
+**Provide summary statistics for each the variables. Also include appropriate visualizations related to your research question (e.g. scatter plot, boxplots, etc). This step requires the use of R, hence a code chunk is provided below. Insert more code chunks as needed.**
+
+```{r}
+
+```
+
