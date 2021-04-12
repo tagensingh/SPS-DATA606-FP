@@ -1,65 +1,195 @@
 ---
-title: DATA 606 Data Project Proposal
+title: "DATA 606 FINAL PROJECT - PROPOSAL - "
 author: "Tage N Singh"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
 ---
+
+```yaml
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+```
+
+```{r library-setup}
+
+library(readr)
+library(dplyr)
+library(kableExtra)
+library(ggplot2)
+library(sm)
+library(lubridate)
+
+```
+
+
+
 
 ### Data Preparation
 
 ```{r setup, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
 # load data
 
+masks <- data.frame(read.csv(file = "https://raw.githubusercontent.com/tagensingh/SPS-DATA606-FP/main/mask-use-by-county.csv"))
+
+US <- data.frame(read.csv(file = "https://raw.githubusercontent.com/tagensingh/SPS-DATA606-FP/main/us.csv"))
+
+states <- data.frame(read.csv(file = "https://raw.githubusercontent.com/tagensingh/SPS-DATA606-FP/main/us-states.csv"))
+
+counties <- data.frame(read.csv(file = "https://raw.githubusercontent.com/tagensingh/SPS-DATA606-FP/main/us-counties.csv"))
+
+
+
 ```
 
 
-### Research question 
+## Research question 
 
 **You should phrase your research question in a way that matches up with the scope of inference your dataset allows for.**
 
-This project will examine the relationship between the confirmed COVID-19 cases and deaths for the United States between 01/22/2020 and 02/27/2021. The datasets provide county level data and popluations for each of the counties in the USA. 
+### What is the impact of mask usage on COVID-19 cases and deaths in the USA 
 
-### Cases 
+COVID-19 is the most devastating modern pandemic since the AIDS pandemic.
+
+Currently we have recorded 135 million cases with 2.9 million deaths worldwide.
+
+Currently the USA have recorded 31.2 million cases with 561 thousand deaths.
+
+Our study will examine the data and relationship ( correlation) between mask usage, cases and deaths at national, state and county level.
+
+## Cases 
 
 **What are the cases, and how many are there?**
 
-The cases are provided in a time series format in csv format
+### The cases are contained in 2 main datasets
 
 
-### Data collection 
+The mask usage dataset contain county records from a NY Times survey done by survey firm Dynata of 250,000 responses between July 2nd and July 14th 2020, the dataset contain `r nrow(masks)` records.
+
+The counties dataset contain daily cases and deaths for each county in the USA from 01/20/2020 to 04/04/2021, the dataset contain `r nrow(counties)` records.
+
+The "US" and "STATES" datasets are supplemental for reference.
+
+
+## Data collection 
 
 **Describe the method of data collection.**
 
+### The data was downloaded from Kaggle and then uploaded to Github. I am reading the .csv from github raw form.
 
-
-### Type of study 
+## Type of study 
 
 **What type of study is this (observational/experiment)?**
 
-This is an observational study.
+### This is an observational study analyzing data collected by NY times and Dynata.
 
-### Data Source 
+## Data Source 
 
 **If you collected the data, state self-collected. If not, provide a citation/link.**
 
+### The data was sourced from kaggle.com, it was compiled by the NY Times   
+
+Data from The New York Times, based on reports from state and local health agencies.
+
+https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html
 
 
 
-### Dependent Variable
+## Dependent Variable
 
 **What is the response variable? Is it quantitative or qualitative?**
 
+### In this study the response variables are the COVID-19 cases and deaths in the USA, measured at the county level. This is a quantitative variable.It is contained in the us_counties dataset.
 
 
-### Independent Variable
+
+## Independent Variable
 
 **You should have two independent variables, one quantitative and one qualitative.**
 
+### In this study the independent variables are the COVID-19 mask usage in the USA, measured at the county level. This is a quantitative variable contained in the mask_use_by_county dataset.
 
-
-### Relevant summary statistics 
+## Relevant summary statistics 
 
 **Provide summary statistics for each the variables. Also include appropriate visualizations related to your research question (e.g. scatter plot, boxplots, etc). This step requires the use of R, hence a code chunk is provided below. Insert more code chunks as needed.**
 
-```{r}
+```{r summary masks}
+
+## The summary for the masks dataset
+
+summary(masks)
+
+## The summary for the respondents who NEVER wore a mask - masks$NEVER  field
+
+summary(masks$NEVER)
+
+n <- density(masks$NEVER) # returns the density data
+plot(n, main="Kernel Density of Respondents who NEVER wore masks")
+polygon(n, col="red", border="blue")
+
+## The summary for the respondents who RARELY wore a mask - masks$RARELY  field
+
+summary(masks$RARELY)
+
+r <- density(masks$RARELY) # returns the density data
+plot(r, main="Kernel Density of Respondents who RARELY wore masks")
+polygon(r, col="blue", border="red")
+
+## The summary for the respondents who SOMETIMES wore a mask - masks$SOMETIMES  field
+
+summary(masks$SOMETIMES)
+
+s <- density(masks$SOMETIMES) # returns the density data
+plot(s, main="Kernel Density of Respondents who SOMETIMES wore masks")
+polygon(s, col="yellow", border="red")
+
+## The summary for the respondents who FREQUENTLY wore a mask - masks$FREQUENTLY  field
+
+summary(masks$FREQUENTLY)
+
+f <- density(masks$FREQUENTLY) # returns the density data
+plot(f, main="Kernel Density of Respondents who FREQUENTLY wore masks")
+polygon(f, col="orange", border="purple")
+
+## The summary for the respondents who ALWAYS wore a mask - masks$ALWAYS  field
+
+summary(masks$ALWAYS)
+
+a <- density(masks$ALWAYS) # returns the density data
+plot(a, main="Kernel Density of Respondents who ALWAYS wore masks")
+polygon(a, col="green", border="red")
 
 ```
+
+```{r states}
+
+## The summary for the counties dataset
+
+str(states)
+
+class(states$date)
+
+states <- arrange(states,state,date())
+
+states
+
+
+states <- states %>%
+          select(date, state, fips,cases,deaths) %>%
+          mutate(
+          year = year(states$date),
+          month = month(states$date) %>%
+          group_by(state)%>%
+          summarise(cases = sum(cases), deaths = sum(deaths))
+          ) 
+          
+
+tibble(states)
+
+```
+
 
