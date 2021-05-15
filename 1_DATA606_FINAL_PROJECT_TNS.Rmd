@@ -1,0 +1,80 @@
+---
+title: DATA 606 Data Project 
+author: Tage N Singh
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```yaml
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+```
+
+```{r library-setup}
+
+library(readr)
+library(dplyr)
+library(kableExtra)
+library(ggplot2)
+library(sm)
+library(lubridate)
+
+```
+
+### Part 1 - Introduction
+
+
+### Part 2 - Data
+The data for this project is pulled directly from the NY Times github repository
+
+
+
+
+```{r setup, echo=TRUE, results='hide', warning=FALSE, message=FALSE}
+# load data
+
+masks <- data.frame(read.csv(file = "https://raw.githubusercontent.com/tagensingh/SPS-DATA606-FP/main/mask-use-by-county.csv"))
+
+US <- data.frame(read.csv(file = "https://raw.githubusercontent.com/tagensingh/SPS-DATA606-FP/main/us.csv"))
+
+states <- data.frame(read.csv(file = "https://raw.githubusercontent.com/tagensingh/SPS-DATA606-FP/main/us-states.csv"))
+
+counties <- data.frame(read.csv(file = "https://raw.githubusercontent.com/tagensingh/SPS-DATA606-FP/main/us-counties.csv"))
+
+
+# Testing connections
+
+summary(masks)
+
+summary(us)
+
+summary(states)
+
+summary(counties)
+
+
+
+```
+
+
+
+### Part 3 - Exploratory data analysis
+
+
+### Part 4 - Inference
+
+
+### Part 5 - Conclusion
+
+
+### References
+
+
+### Appendix (optional)
+
+Remove this section if you don't have an appendix

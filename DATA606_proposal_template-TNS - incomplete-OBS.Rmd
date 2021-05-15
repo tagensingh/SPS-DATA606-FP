@@ -165,10 +165,31 @@ polygon(a, col="green", border="red")
 
 ```
 
-## PROPOSAL CONCLUSION
+```{r states}
+
+## The summary for the counties dataset
+
+str(states)
+
+class(states$date)
+
+states <- arrange(states,state,date())
+
+states
 
 
-### This scope of this project and the datasets used allow for a fairly indepth analysis of the COVID-19 Pandemic. The brief analysis of the masks dataset above is just a small subset "tibble" of the insights we hope to draw out. This project is providing a learning platform for my R programming and while the process is sometimes painstaking, it is providing a soild foundation and rewarding experience as I create a tangible product with real data.
+states <- states %>%
+          select(date, state, fips,cases,deaths) %>%
+          mutate(
+          year = year(states$date),
+          month = month(states$date) %>%
+          group_by(state)%>%
+          summarise(cases = sum(cases), deaths = sum(deaths))
+          ) 
+          
 
+tibble(states)
+
+```
 
 
